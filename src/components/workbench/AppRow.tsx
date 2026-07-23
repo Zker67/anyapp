@@ -43,12 +43,12 @@ export function AppRow(props: AppRowProps) {
         <div className="app-row-title-line">
           <h2>{app.name}</h2>
           {app.favorite ? <Heart aria-label="已收藏" className="app-row-favorite-mark" /> : null}
-          <Badge variant={health.tone}><StatusDot tone={health.tone} />{health.label}</Badge>
-          <Badge className="app-portability" variant="neutral">{portabilityLabel(app.portability)}</Badge>
+          {app.health !== 'healthy' ? <Badge variant={health.tone}><StatusDot tone={health.tone} />{health.label}</Badge> : null}
         </div>
         <p className="app-row-secondary" title={app.description || app.resolvedPath}>{app.description || app.resolvedPath}</p>
         <div className="app-row-meta">
           <span>{categoryName}</span><i aria-hidden="true" />
+          <span>{portabilityLabel(app.portability)}</span><i aria-hidden="true" />
           <span>{displayDate(app.lastLaunchedAt)}</span><i aria-hidden="true" />
           <span>启动 {app.launchCount} 次</span>
           {!compact ? app.tags.slice(0, 2).map((tag) => <span className="app-row-tag" key={tag}>#{tag}</span>) : null}

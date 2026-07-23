@@ -23,8 +23,7 @@ export function LibraryControls({ title, resultCount, healthyCount, issueCount, 
   return (
     <header className="library-controls">
       <div className="library-heading">
-        <p>APPLICATION LIBRARY</p>
-        <div><h1>{title}</h1><span>{resultCount} 个结果</span></div>
+        <h1>{title}</h1><span>{resultCount} 个结果</span>
       </div>
       <div className="library-control-group">
         <Select value={categoryValue || '__all__'} onValueChange={(value) => onFilterChange(value && value !== '__all__' ? `category:${value}` : 'all')}>

@@ -10,6 +10,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from './ui/dialog'
+import { Tabs, TabsList, TabsPanel, TabsTab } from './ui/tabs'
 
 interface UsageGuideDialogProps {
   open: boolean
@@ -33,43 +34,62 @@ export function UsageGuideDialog({ open, onOpenChange }: UsageGuideDialogProps) 
           <DialogDescription>从添加第一个软件开始，了解启动、整理、路径修复和本地数据管理。</DialogDescription>
         </DialogHeader>
 
-        <DialogBody className="space-y-5 leading-6">
-          <GuideSection icon={<Library />} title="1. 添加与整理软件">
-            <ul className="list-disc space-y-1 pl-5 text-muted-foreground">
-              <li>点击顶部“添加软件”，手动填写名称并选择本地 <code>.exe</code> 或 <code>.lnk</code>。</li>
-              <li>点击“扫描”，选择一个或多个目录；确认候选、调整名称后再一次性保存，取消不会修改正式配置。</li>
-              <li>AnyApp 不支持 <code>.bat</code> 或 <code>.cmd</code>，扫描也不会执行发现的软件。</li>
-              <li>通过左侧导航查看全部、收藏、最近、路径异常或分类；顶部搜索支持名称、标签、描述、分类和路径。</li>
-            </ul>
-          </GuideSection>
+        <DialogBody className="overflow-hidden leading-6">
+          <Tabs className="flex min-h-0 flex-col" defaultValue="organize">
+            <TabsList aria-label="使用说明栏目">
+              <TabsTab value="organize"><Library />添加整理</TabsTab>
+              <TabsTab value="launch"><ExternalLink />启动操作</TabsTab>
+              <TabsTab value="data"><ShieldCheck />路径与数据</TabsTab>
+              <TabsTab value="shortcuts"><Keyboard />快捷键</TabsTab>
+            </TabsList>
 
-          <GuideSection icon={<ExternalLink />} title="2. 启动与更多操作">
-            <ul className="list-disc space-y-1 pl-5 text-muted-foreground">
-              <li>点击软件行的“启动”运行程序，星标按钮用于加入或移出收藏。</li>
-              <li>“更多”菜单可在资源管理器中定位、打开网站、创建桌面快捷方式、编辑或删除记录。</li>
-              <li>删除只移除 AnyApp 中的记录，不会删除磁盘上的软件；打开网站前会显示完整目标地址。</li>
-            </ul>
-          </GuideSection>
+            <div className="min-h-0 overflow-y-auto">
+              <TabsPanel value="organize">
+                <GuideSection title="添加与整理软件">
+                  <ul className="list-disc space-y-1 pl-5 text-muted-foreground">
+                    <li>点击顶部“添加软件”，手动填写名称并选择本地 <code>.exe</code> 或 <code>.lnk</code>。</li>
+                    <li>点击“扫描”，选择一个或多个目录；确认候选、调整名称后再一次性保存，取消不会修改正式配置。</li>
+                    <li>AnyApp 不支持 <code>.bat</code> 或 <code>.cmd</code>，扫描也不会执行发现的软件。</li>
+                    <li>通过左侧导航查看全部、收藏、最近、路径异常或分类；顶部搜索支持名称、标签、描述、分类和路径。</li>
+                  </ul>
+                </GuideSection>
+              </TabsPanel>
 
-          <GuideSection icon={<ShieldCheck />} title="3. 路径、设置与数据">
-            <ul className="list-disc space-y-1 pl-5 text-muted-foreground">
-              <li>路径异常的软件不能直接启动。打开“数据与行为设置”，可按原根目录和新根目录批量重新定位。</li>
-              <li>设置中可以选择启动软件后保持、最小化或退出 AnyApp，也可以开启紧凑清单。</li>
-              <li>JSON 导入会先显示预览和迁移提示，确认后才替换配置；也可以导出当前配置或恢复最近三份轮换备份。</li>
-              <li>便携版数据默认位于 <code>AnyApp.exe</code> 同级的 <code>AnyAppData</code>。移动软件时请将二者一起移动。</li>
-            </ul>
-          </GuideSection>
+              <TabsPanel value="launch">
+                <GuideSection title="启动与更多操作">
+                  <ul className="list-disc space-y-1 pl-5 text-muted-foreground">
+                    <li>点击软件行的“启动”运行程序，星标按钮用于加入或移出收藏。</li>
+                    <li>“更多”菜单可在资源管理器中定位、打开网站、创建桌面快捷方式、编辑或删除记录。</li>
+                    <li>删除只移除 AnyApp 中的记录，不会删除磁盘上的软件；打开网站前会显示完整目标地址。</li>
+                  </ul>
+                </GuideSection>
+              </TabsPanel>
 
-          <GuideSection icon={<Keyboard />} title="4. 键盘操作">
-            <dl className="grid grid-cols-[minmax(84px,auto)_1fr] gap-x-3 gap-y-2 text-muted-foreground">
-              {shortcuts.map(([keys, description]) => (
-                <div className="contents" key={keys}>
-                  <dt><kbd className="rounded border border-border bg-muted px-1.5 py-0.5 font-mono text-xs text-foreground">{keys}</kbd></dt>
-                  <dd>{description}</dd>
-                </div>
-              ))}
-            </dl>
-          </GuideSection>
+              <TabsPanel value="data">
+                <GuideSection title="路径、设置与数据">
+                  <ul className="list-disc space-y-1 pl-5 text-muted-foreground">
+                    <li>路径异常的软件不能直接启动。打开“数据与行为设置”，可按原根目录和新根目录批量重新定位。</li>
+                    <li>设置中可以选择启动软件后保持、最小化或退出 AnyApp，也可以开启紧凑清单。</li>
+                    <li>JSON 导入会先显示预览和迁移提示，确认后才替换配置；也可以导出当前配置或恢复最近三份轮换备份。</li>
+                    <li>便携版数据默认位于 <code>AnyApp.exe</code> 同级的 <code>AnyAppData</code>。移动软件时请将二者一起移动。</li>
+                  </ul>
+                </GuideSection>
+              </TabsPanel>
+
+              <TabsPanel value="shortcuts">
+                <GuideSection title="键盘操作">
+                  <dl className="grid grid-cols-[minmax(84px,auto)_1fr] gap-x-3 gap-y-2 text-muted-foreground">
+                    {shortcuts.map(([keys, description]) => (
+                      <div className="contents" key={keys}>
+                        <dt><kbd className="rounded border border-border bg-muted px-1.5 py-0.5 font-mono text-xs text-foreground">{keys}</kbd></dt>
+                        <dd>{description}</dd>
+                      </div>
+                    ))}
+                  </dl>
+                </GuideSection>
+              </TabsPanel>
+            </div>
+          </Tabs>
         </DialogBody>
 
         <DialogFooter>
@@ -80,13 +100,10 @@ export function UsageGuideDialog({ open, onOpenChange }: UsageGuideDialogProps) 
   )
 }
 
-function GuideSection({ icon, title, children }: { icon: ReactNode; title: string; children: ReactNode }) {
+function GuideSection({ title, children }: { title: string; children: ReactNode }) {
   return (
     <section className="space-y-2">
-      <h2 className="flex items-center gap-2 font-heading text-sm font-bold text-foreground [&_svg]:size-4 [&_svg]:text-primary">
-        {icon}
-        {title}
-      </h2>
+      <h2 className="font-heading text-sm font-bold text-foreground">{title}</h2>
       {children}
     </section>
   )
