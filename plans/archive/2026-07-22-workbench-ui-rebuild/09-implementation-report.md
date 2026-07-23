@@ -132,3 +132,12 @@ Menu group parts must be used within <Menu.Group> or <Menu.RadioGroup>.
 | 发布候选扫描 | 未发现密钥、真实用户清单、工作区绝对路径、旧品牌名称或未忽略的构建/用户数据目录 |
 
 Cargo 仍提示当前磁盘无法为 incremental cache 建立硬链接并自动退化为复制；这是环境性能 warning，不影响检查和测试结果。
+
+## 源码发布收口
+
+- 公开仓库：`https://github.com/Zker67/anyapp`
+- 默认分支：`main`
+- 首个基线提交：`629cf39`（`feat: bootstrap AnyApp launcher`）
+- 首次推送日期：2026-07-23
+- 发布范围：源码、锁文件、项目图标、README、MIT LICENSE 和归档计划；不含 `.dev-data/`、`AnyAppData/`、`node_modules/`、`dist/`、Rust `target/` 或成品 exe
+- 未创建 GitHub Release、tag、安装包发布或自动更新渠道
